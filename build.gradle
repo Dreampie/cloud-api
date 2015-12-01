@@ -1,0 +1,57 @@
+subprojects {
+  buildscript {
+    ext {
+      springDependencyManagementVersion = "0.5.3.RELEASE"
+      springBootVersion = "1.3.0.RELEASE"
+    }
+    repositories {
+      mavenCentral()
+    }
+
+    dependencies {
+      classpath("io.spring.gradle:dependency-management-plugin:${springDependencyManagementVersion}")
+      classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+  }
+
+  group "cn.dreampie.api"
+  version "1.0-SNAPSHOT"
+
+  apply plugin: "java"
+  apply plugin: "idea"
+  apply plugin: "maven"
+
+  sourceCompatibility = 1.8
+  targetCompatibility = 1.8
+
+  repositories {
+    mavenLocal()
+    maven { url "https://repo.spring.io/release" }
+    mavenCentral()
+  }
+
+  task javadocJar(type: Jar) {
+    classifier = "javadoc"
+    from javadoc
+  }
+
+  task sourcesJar(type: Jar) {
+    classifier = "sources"
+    from sourceSets.main.allSource
+  }
+
+  artifacts {
+    archives javadocJar, sourcesJar
+  }
+
+  configurations.all {
+    resolutionStrategy {
+      cacheChangingModulesFor 0, "seconds"
+      cacheDynamicVersionsFor 0, 'seconds'
+    }
+  }
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = "2.8"
+}
