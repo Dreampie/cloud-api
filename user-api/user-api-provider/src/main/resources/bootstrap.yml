@@ -1,6 +1,6 @@
 spring:
   application:
-    name: user-api
+    name: user-api-provider
   cloud:
     config:
       uri: ${CONFIG_SERVER_URL:http://127.0.0.1:8888}
