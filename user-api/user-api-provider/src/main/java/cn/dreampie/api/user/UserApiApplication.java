@@ -8,8 +8,8 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients
-@ComponentScan(basePackages = {"cn.dreampie.api", "cn.dreampie.service"})
+@EnableFeignClients(basePackages = {"cn.dreampie.service"})
+@ComponentScan(basePackages = {"cn.dreampie.api"})
 public class UserApiApplication {
 
   public static void main(String[] args) {
