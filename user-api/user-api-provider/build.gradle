@@ -1,7 +1,7 @@
+apply plugin: "spring-boot"
 apply plugin: "io.spring.dependency-management"
 
 ext {
-  springCloudStarterVersion = "1.0.2.RELEASE"
   userServiceVersion = "1.0-SNAPSHOT"
   userApiVersion = "1.0-SNAPSHOT"
 }
