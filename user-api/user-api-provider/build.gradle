@@ -1,5 +1,6 @@
 apply plugin: "spring-boot"
 apply plugin: "io.spring.dependency-management"
+apply plugin: "docker"
 
 ext {
   userServiceVersion = "1.0-SNAPSHOT"
@@ -24,3 +25,17 @@ dependencies {
 }
 
 install.enabled = false
+
+task buildDocker(type: Docker, dependsOn: build) {
+  maintainer = "Dreampie <Dreampie@outlook.com>"
+  push = true
+  applicationName = jar.baseName
+  dockerfile = file("src/main/docker/Dockerfile")
+  registry = dockerRegistry
+  doFirst {
+    copy {
+      from jar
+      into stageDir
+    }
+  }
+}
