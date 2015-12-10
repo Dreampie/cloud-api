@@ -5,10 +5,7 @@ import cn.dreampie.service.user.UserConstants;
 import cn.dreampie.service.user.UserService;
 import cn.dreampie.service.user.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by Dreampie on 15/11/30.
@@ -19,12 +16,22 @@ public class UserController {
   private UserService userService;
 
   @RequestMapping(value = UserConstants.USERS_ID_PATH, method = RequestMethod.GET)
-  public User get(@PathVariable String id) {
-    UserEntity entity = userService.getById(id);
-    User user = null;
+  public User findById(@PathVariable String id) {
+    UserEntity entity = userService.findById(id);
+    User result = null;
     if (entity != null) {
-      user = new User(entity);
+      result = new User(entity);
     }
-    return user;
+    return result;
+  }
+
+  @RequestMapping(value = UserConstants.USERS_PATH, method = RequestMethod.POST)
+  public User save(@RequestBody User user) {
+    UserEntity entity = userService.save(user.reverseEntity());
+    User result = null;
+    if (entity != null) {
+      result = new User(entity);
+    }
+    return result;
   }
 }
