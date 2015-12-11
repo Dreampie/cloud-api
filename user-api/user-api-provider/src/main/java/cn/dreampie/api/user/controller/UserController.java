@@ -25,8 +25,15 @@ public class UserController {
     return result;
   }
 
+  @RequestMapping(value = UserConstants.USERS_ID_PATH, method = RequestMethod.DELETE)
+  public boolean deleteById(@PathVariable String id) {
+    userService.deleteById(id);
+    return true;
+  }
+
   @RequestMapping(value = UserConstants.USERS_PATH, method = RequestMethod.POST)
   public User save(@RequestBody User user) {
+    user.setId(null);
     UserEntity entity = userService.save(user.reverseEntity());
     User result = null;
     if (entity != null) {
@@ -34,4 +41,16 @@ public class UserController {
     }
     return result;
   }
+
+  @RequestMapping(value = UserConstants.USERS_ID_PATH, method = RequestMethod.PUT)
+  public User update(@PathVariable String id, @RequestBody User user) {
+    user.setId(id);
+    UserEntity entity = userService.save(user.reverseEntity());
+    User result = null;
+    if (entity != null) {
+      result = new User(entity);
+    }
+    return result;
+  }
+
 }
