@@ -7,6 +7,9 @@ import cn.dreampie.service.user.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * Created by Dreampie on 15/11/30.
  */
@@ -14,6 +17,16 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
   @Autowired
   private UserService userService;
+
+  @RequestMapping(value = UserConstants.USERS_PATH, method = RequestMethod.GET)
+  public List<User> findAll() {
+    List<UserEntity> entities = userService.findAll();
+    List<User> result = null;
+    if (entities != null) {
+      result = entities.stream().map(User::new).collect(Collectors.toList());
+    }
+    return result;
+  }
 
   @RequestMapping(value = UserConstants.USERS_ID_PATH, method = RequestMethod.GET)
   public User findById(@PathVariable String id) {
